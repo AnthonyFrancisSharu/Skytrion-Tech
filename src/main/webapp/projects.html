@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Skytrion Tech — Projects</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --dark-bg: #0c0f1a; --dark-surface: #121627; --dark-card: #181d30;
+            --dark-border: #252b42; --dark-border2: #2f3650;
+            --light-bg: #ffffff; --light-surface: #f4f6fb; --light-border: #e3e7f0;
+            --accent: #3b82f6; --accent-light: #60a5fa; --accent-glow: rgba(59,130,246,0.25); --accent-tint: rgba(59,130,246,0.08);
+            --dark-text: #eef1fc; --dark-muted: #6b7494; --dark-muted2: #9ba3c4;
+            --light-text: #0f1523; --light-muted: #5a6380; --light-muted2: #374361;
+            --font: 'DM Sans', sans-serif; --mono: 'DM Mono', monospace;
+            --rad-sm: 8px; --rad-md: 12px; --rad-lg: 18px;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font); overflow-x: hidden; -webkit-font-smoothing: antialiased; line-height: 1.6; }
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 300; height: 64px; background: rgba(12,15,26,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--dark-border); }
+        .nav-inner { max-width: 1200px; width: 100%; margin: 0 auto; padding: 0 2rem; height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+        .logo { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.03em; color: var(--dark-text); text-decoration: none; flex-shrink: 0; }
+        .logo span { color: var(--accent-light); }
+        .nav-links { display: flex; align-items: center; gap: 2px; list-style: none; flex: 1; justify-content: center; }
+        .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--dark-muted); text-decoration: none; padding: 0.4rem 0.9rem; border-radius: var(--rad-sm); transition: color 0.18s, background 0.18s; white-space: nowrap; }
+        .nav-links a:hover { color: var(--dark-text); background: rgba(255,255,255,0.06); }
+        .nav-links a.active { color: var(--dark-text); }
+        .nav-right { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+        .nav-cta { background: var(--accent); color: #fff; padding: 0.45rem 1.15rem; border-radius: var(--rad-sm); font-size: 0.855rem; font-weight: 600; text-decoration: none; transition: opacity 0.2s; box-shadow: 0 0 20px var(--accent-glow); }
+        .nav-cta:hover { opacity: 0.85; }
+        .hamburger { display: none; background: none; border: 1px solid var(--dark-border); border-radius: var(--rad-sm); cursor: pointer; padding: 7px 8px; flex-direction: column; align-items: center; gap: 4px; }
+        .hamburger span { display: block; width: 18px; height: 2px; background: var(--dark-muted2); border-radius: 2px; }
+        .mobile-menu { display: none; flex-direction: column; position: fixed; top: 64px; left: 0; right: 0; background: rgba(12,15,26,0.99); backdrop-filter: blur(20px); border-bottom: 1px solid var(--dark-border); z-index: 199; }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu a { padding: 0.875rem 2rem; font-size: 0.925rem; font-weight: 500; color: var(--dark-muted2); text-decoration: none; border-bottom: 1px solid var(--dark-border); }
+        .mobile-menu a:last-child { border-bottom: none; }
+        .mobile-menu a:hover { color: var(--dark-text); }
+        .mobile-menu a.mob-cta { color: var(--accent-light); font-weight: 600; }
+        @media (max-width: 820px) { .nav-links, .nav-cta { display: none; } .hamburger { display: flex; } }
+
+        .s-dark { background: var(--dark-bg); position: relative; overflow: hidden; }
+        .s-dark::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse 70% 55% at 65% -5%, rgba(59,130,246,0.13) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at -5% 90%, rgba(59,130,246,0.07) 0%, transparent 55%); }
+        .s-dark::after { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; background-image: linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px); background-size: 55px 55px; mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, black 10%, transparent 100%); }
+        .s-light { background: var(--light-bg); position: relative; z-index: 1; }
+
+        .section-inner { max-width: 1200px; margin: 0 auto; padding: 5.5rem 2rem; position: relative; z-index: 1; }
+        .tag-on-dark { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 0.5rem; font-family: var(--mono); }
+
+        /* PAGE HEADER */
+        .page-header { padding: 130px 2rem 70px; position: relative; z-index: 1; }
+        .page-header-inner { max-width: 1200px; margin: 0 auto; }
+        .page-title { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; color: var(--dark-text); margin-bottom: 1.1rem; }
+        .page-title .grad { background: linear-gradient(135deg, #60a5fa 0%, #93c5fd 50%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .page-desc { font-size: 0.97rem; color: var(--dark-muted2); max-width: 520px; line-height: 1.8; }
+
+        /* FILTER */
+        .filter-wrap { max-width: 1200px; margin: 0 auto; padding: 2.5rem 2rem 0; }
+        .filter-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .filter-btn { background: var(--light-surface); border: 1px solid var(--light-border); color: var(--light-muted); padding: 0.45rem 1.1rem; border-radius: 100px; font-size: 0.82rem; font-weight: 500; cursor: pointer; transition: all 0.2s; font-family: var(--font); }
+        .filter-btn:hover { border-color: rgba(59,130,246,0.4); color: var(--accent); }
+        .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 4px 14px var(--accent-glow); }
+
+        /* PROJECTS GRID */
+        .projects-wrap { max-width: 1200px; margin: 0 auto; padding: 2rem 2rem 5.5rem; }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+        .card { background: var(--light-bg); border: 1px solid var(--light-border); border-radius: var(--rad-lg); overflow: hidden; transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s; box-shadow: 0 2px 10px rgba(15,21,35,0.06); position: relative; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(15,21,35,0.12), 0 0 0 1px rgba(59,130,246,0.2); border-color: rgba(59,130,246,0.25); }
+        .card-thumb { height: 130px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 800; letter-spacing: -0.04em; color: rgba(255,255,255,0.85); }
+        .card-body { padding: 1.5rem; }
+        .card-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.65rem; }
+        .card-cat { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); font-family: var(--mono); }
+        .card-year { font-size: 0.68rem; color: var(--light-muted); font-family: var(--mono); }
+        .card h3 { font-size: 1rem; font-weight: 700; color: var(--light-text); margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+        .card p { font-size: 0.845rem; color: var(--light-muted); line-height: 1.7; margin-bottom: 1rem; }
+        .card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .ctag { background: var(--light-surface); border: 1px solid var(--light-border); padding: 3px 10px; border-radius: 100px; font-size: 0.72rem; color: var(--light-muted2); font-family: var(--mono); }
+        .card-arrow { position: absolute; top: 1rem; right: 1rem; width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.9); border: 1px solid var(--light-border); display: flex; align-items: center; justify-content: center; color: var(--light-text); text-decoration: none; opacity: 0; transition: opacity 0.2s, background 0.2s; }
+        .card:hover .card-arrow { opacity: 1; }
+        .card-arrow:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+        /* LIGHT CTA — replaces the old dark cta-wrap */
+        .cta-light {
+            background: var(--light-surface);
+            border-top: 1px solid var(--light-border);
+            border-bottom: 1px solid var(--light-border);
+            padding: 5.5rem 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .cta-light-inner { max-width: 520px; margin: 0 auto; position: relative; z-index: 1; }
+        .cta-light-tag { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; font-family: var(--mono); }
+        .cta-light h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); font-weight: 800; letter-spacing: -0.04em; color: var(--light-text); margin-bottom: 0.75rem; line-height: 1.15; }
+        .cta-light p { font-size: 0.95rem; color: var(--light-muted); max-width: 400px; margin: 0 auto 2rem; line-height: 1.75; }
+        .btn-primary { background: var(--accent); color: #fff; padding: 0.75rem 1.75rem; border-radius: var(--rad-md); font-size: 0.9rem; font-weight: 700; text-decoration: none; display: inline-block; box-shadow: 0 4px 20px var(--accent-glow); transition: transform 0.2s, box-shadow 0.2s; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(59,130,246,0.45); }
+
+        /* FOOTER */
+        footer { background: var(--dark-surface); border-top: 1px solid var(--dark-border); }
+        .footer-top { max-width: 1200px; margin: 0 auto; padding: 3.5rem 2rem 2.5rem; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; border-bottom: 1px solid var(--dark-border); }
+        .f-logo { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.02em; color: var(--dark-text); text-decoration: none; display: inline-block; margin-bottom: 0.75rem; }
+        .f-logo span { color: var(--accent-light); }
+        .footer-brand p { font-size: 0.83rem; color: var(--dark-muted); line-height: 1.7; max-width: 210px; }
+        .footer-col h4 { font-size: 0.66rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dark-muted); margin-bottom: 1rem; font-family: var(--mono); }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+        .footer-col ul li a { font-size: 0.875rem; color: var(--dark-muted2); text-decoration: none; transition: color 0.2s; }
+        .footer-col ul li a:hover { color: var(--dark-text); }
+        .footer-bottom { max-width: 1200px; margin: 0 auto; padding: 1.25rem 2rem; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0.75rem; }
+        .footer-bottom p { font-size: 0.73rem; color: var(--dark-muted); font-family: var(--mono); }
+        .footer-bottom-links { display: flex; gap: 1.5rem; }
+        .footer-bottom-links a { font-size: 0.73rem; color: var(--dark-muted); text-decoration: none; transition: color 0.2s; font-family: var(--mono); }
+        .footer-bottom-links a:hover { color: var(--dark-text); }
+
+        .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .card.hidden { display: none; }
+
+        @media (max-width: 1020px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; } .grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } .footer-top { grid-template-columns: 1fr; } .footer-bottom { flex-direction: column; align-items: flex-start; } }
+    </style>
+</head>
+<body>
+<nav>
+    <div class="nav-inner">
+        <a href="index.html" class="logo">Skytrion<span>Tech</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li>
+            <li><a href="projects.html" class="active">Projects</a></li><li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+            <a href="contact.html" class="nav-cta">Get Started</a>
+            <button class="hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+        </div>
+    </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a><a href="services.html">Services</a><a href="projects.html">Projects</a>
+    <a href="about.html">About Us</a><a href="contact.html">Contact Us</a><a href="contact.html" class="mob-cta">Get Started →</a>
+</div>
+
+<!-- DARK: Header -->
+<div class="s-dark">
+    <div class="page-header">
+        <div class="page-header-inner">
+            <p class="tag-on-dark">— Our Portfolio</p>
+            <h1 class="page-title">Work We're<br><span class="grad">Proud Of</span></h1>
+            <p class="page-desc">A selection of projects that showcase our range, craftsmanship, and commitment to delivering quality digital products.</p>
+        </div>
+    </div>
+</div>
+
+<!-- LIGHT: Projects + Filter -->
+<div class="s-light">
+    <div class="filter-wrap reveal">
+        <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all">All Projects</button>
+            <button class="filter-btn" data-filter="web">Websites</button>
+            <button class="filter-btn" data-filter="software">Software</button>
+            <button class="filter-btn" data-filter="mobile">Mobile</button>
+            <button class="filter-btn" data-filter="ecommerce">E-Commerce</button>
+        </div>
+    </div>
+    <div class="projects-wrap reveal">
+        <div class="grid">
+            <div class="card" data-cat="software">
+                <div class="card-thumb" style="background:linear-gradient(135deg,#1e40af 0%,#0a2540 100%);">ERP</div>
+                <div class="card-body"><div class="card-meta"><span class="card-cat">Software</span><span class="card-year">2024</span></div><h3>LogiFlow ERP System</h3><p>A full-featured enterprise resource planning system for a logistics company with real-time tracking and inventory management.</p><div class="card-tags"><span class="ctag">React</span><span class="ctag">Node.js</span><span class="ctag">PostgreSQL</span><span class="ctag">AWS</span></div></div>
+                <a href="contact.html" class="card-arrow"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg></a>
+            </div>
+            <div class="card" data-cat="web">
+                <div class="card-thumb" style="background:linear-gradient(135deg,#065f46 0%,#0a2018 100%);">BLOOM</div>
+                <div class="card-body"><div class="card-meta"><span class="card-cat">Website</span><span class="card-year">2024</span></div><h3>Bloom Agency Website</h3><p>A visually immersive marketing agency website with custom animations, scroll effects, and a fully integrated CMS.</p><div class="card-tags"><span class="ctag">Next.js</span><span class="ctag">GSAP</span><span class="ctag">Sanity CMS</span></div></div>
+                <a href="contact.html" class="card-arrow"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg></a>
+            </div>
+            <div class="card" data-cat="ecommerce">
+                <div class="card-thumb" style="background:linear-gradient(135deg,#6d28d9 0%,#280a28 100%);">LUXE</div>
+                <div class="card-body"><div class="card-meta"><span class="card-cat">E-Commerce</span><span class="card-year">2024</span></div><h3>Luxe Fashion Store</h3><p>A premium Shopify store for a luxury brand with a fully custom theme and 40% improvement in conversion rate.</p><div class="card-tags"><span class="ctag">Shopify</span><span class="ctag">Liquid</span><span class="ctag">Custom Theme</span></div></div>
+                <a href="contact.html" class="card-arrow"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg></a>
+            </div>
+            <div class="card" data-cat="mobile">
+                <div class="card-thumb" style="background:linear-gradient(135deg,#065f46 0%,#002a22 100%);">FIT+</div>
+                <div class="card-body"><div class="card-meta"><span class="card-cat">Mobile App</span><span class="card-year">2023</span></div><h3>FitPlus Health App</h3><p>A cross-platform fitness tracking app with workout plans, nutrition logging, and social features. 50k+ downloads in first month.</p><div class="card-tags"><span class="ctag">React Native</span><span class="ctag">Firebase</span><span class="ctag">HealthKit</span></div></div>
+                <a href="contact.html" class="card-arrow"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg></a>
+            </div>
+            <div class="card" data-cat="software">
+                <div class="card-thumb" style="background:linear-gradient(135deg,#92400e 0%,#2a1800 100%);">PAY</div>
+                <div class="card-body"><div class="card-meta"><span class="card-cat">Software</span><span class="card-year">2023</span></div><h3>PayTrack Finance Dashboard</h3><p>A real-time financial management dashboard with live transaction monitoring, reporting, and fraud detection for a fintech startup.</p><div class="card-tags"><span class="ctag">Vue.js</span><span class="ctag">Python</span><span class="ctag">Redis</span><span class="ctag">WebSockets</span></div></div>
+                <a href="contact.html" class="card-arrow"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg></a>
+            </div>
+            <div class="card" data-cat="web">
+                <div class="card-thumb" style="background:linear-gradient(135deg,#1e3a5f 0%,#001828 100%);">EDU</div>
+                <div class="card-body"><div class="card-meta"><span class="card-cat">Website</span><span class="card-year">2023</span></div><h3>EduPath Learning Platform</h3><p>An online education platform with course management, video streaming, quizzes, and progress tracking for 10,000+ students.</p><div class="card-tags"><span class="ctag">Next.js</span><span class="ctag">Prisma</span><span class="ctag">Stripe</span><span class="ctag">CloudFront</span></div></div>
+                <a href="contact.html" class="card-arrow"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- LIGHT: CTA (was dark) -->
+<div class="cta-light reveal">
+    <div class="cta-light-inner">
+        <p class="cta-light-tag">— Let's Work Together</p>
+        <h2>Your Project Could Be Next</h2>
+        <p>We're always excited to take on new challenges. Let's discuss how we can help you build something great.</p>
+        <a href="contact.html" class="btn-primary">Discuss Your Project</a>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-top">
+        <div class="footer-brand"><a href="index.html" class="f-logo">Skytrion<span>Tech</span></a><p>We design and build digital products that help businesses grow — from simple websites to complex software systems.</p></div>
+        <div class="footer-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="projects.html">Projects</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
+        <div class="footer-col"><h4>Services</h4><ul><li><a href="services.html">Website Development</a></li><li><a href="services.html">Custom Software</a></li><li><a href="services.html">Mobile Apps</a></li><li><a href="services.html">Point of Sale</a></li></ul></div>
+        <div class="footer-col"><h4>Contact</h4><ul><li><a href="mailto:skytriontech@gmail.com">skytriontech@gmail.com</a></li><li><a href="tel:+11234567890">+1 (123) 456-7890</a></li><li><a href="contact.html">Send a Message</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Skytrion Tech. All rights reserved.</p></div>
+</footer>
+
+<script>
+    const menuBtn = document.getElementById('menuBtn'), mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => { const o = mobileMenu.classList.toggle('open'); menuBtn.setAttribute('aria-expanded', o); });
+    mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => { mobileMenu.classList.remove('open'); menuBtn.setAttribute('aria-expanded', false); }));
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } }), { threshold: 0.07 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const f = btn.dataset.filter;
+            document.querySelectorAll('.card').forEach(card => {
+                card.classList.toggle('hidden', f !== 'all' && card.dataset.cat !== f);
+            });
+        });
+    });
+</script>
+</body>
+</html>
